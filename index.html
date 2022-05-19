@@ -4,13 +4,16 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Floating Windows</title>
+	<link rel="stylesheet" type="text/css" href="movableWindows.css">
 	<script type="text/javascript" src="movableWindows.js"></script>
 </head>
 <body>
 <script type="text/javascript">
-	floatingWindowConfig.taskBar.color = "#0351DB"
-	new FloatingWindow(600, 400, "<h1>Hello there</h1>")
-	new FloatingWindow(400, 400)
+	for (var i = 0; i < 20; i ++) {
+		floatingWindowConfig.taskBar.color = getRandomColor()
+		floatingWindowConfig.taskBar.height = 40 - i
+		new FloatingWindow(600, 400, "<h1>Hello there</h1>")
+	}
 </script>
 </body>
 </html>

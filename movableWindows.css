@@ -1,0 +1,18 @@
+.mw {
+	position: fixed;
+	overflow: hidden;
+}
+.mw .taskbar {
+	box-shadow: inset 0px 10px 10px #FFF4, inset 0px -5px 10px #0004
+}
+.mw .taskbar .actions {
+	user-select: none;
+	background-color: #0001;
+}
+.mw .taskbar .actions .action {
+	cursor: pointer;
+	display: inline-block;
+}
+.mw .taskbar .actions .action:hover {
+	background-color: #FFF1;
+}
