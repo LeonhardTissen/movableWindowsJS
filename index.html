@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Floating Windows</title>
+</head>
+<body>
+<script type="module">
+	import {floatingWindowConfig, FloatingWindow} from '/modules/class.js'
+	floatingWindowConfig.taskBar.color = "#0351DB"
+	new FloatingWindow(600, 400, "<h1>Hello there</h1>")
+	new FloatingWindow(400, 400)
+</script>
+</body>
+</html>
