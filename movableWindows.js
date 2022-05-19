@@ -1,6 +1,6 @@
 let windowIndex = 0;
 
-export const floatingWindowConfig = {
+const floatingWindowConfig = {
 	window: {
 		borderRadius: 5,
 		outlineColor: "#BBB",
@@ -13,7 +13,7 @@ export const floatingWindowConfig = {
 	}
 }
 
-export class FloatingWindow {
+class FloatingWindow {
 	constructor(width = 600, height = 400, content = "") {
 		this.window = document.createElement('div');
 		this.window.style.position = 'fixed';
