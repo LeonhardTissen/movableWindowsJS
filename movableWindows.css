@@ -5,6 +5,15 @@
 .mw .taskbar {
 	box-shadow: inset 0px 10px 10px #FFF4, inset 0px -5px 10px #0004
 }
+.mw .taskbar .title {
+	font-family: "Segoe UI";
+	position: absolute;
+	left: 5px;
+	top: 3px;
+	margin: 0;
+	user-select: none;
+	pointer-events: none;
+}
 .mw .taskbar .actions {
 	user-select: none;
 	background-color: #0001;

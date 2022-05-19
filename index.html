@@ -7,12 +7,17 @@
 	<link rel="stylesheet" type="text/css" href="movableWindows.css">
 	<script type="text/javascript" src="movableWindows.js"></script>
 </head>
-<body>
+<body style="background-image: url(941898.jpg); background-size: cover;">
 <script type="text/javascript">
+	floatingWindowConfig.window.outlineColor = "#444"
 	for (var i = 0; i < 20; i ++) {
 		floatingWindowConfig.taskBar.color = getRandomColor()
-		floatingWindowConfig.taskBar.height = 40 - i
-		new FloatingWindow(600, 400, "<h1>Hello there</h1>")
+		new FloatingWindow({
+			width: 600,
+			height: 400,
+			title: "The",
+			content: "<div align='center'><p>Hello there</p><img src='index.jpg'></div>"
+		})
 	}
 </script>
 </body>

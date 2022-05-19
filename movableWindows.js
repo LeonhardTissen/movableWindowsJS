@@ -14,7 +14,11 @@ const floatingWindowConfig = {
 }
 
 class FloatingWindow {
-	constructor(width = 600, height = 400, content = "") {
+	constructor(params) {
+		var width = (params.width ? params.width : 600)
+		var height = (params.height ? params.height : 400)
+		var content = (params.content ? params.content : "")
+		var title = (params.title ? params.title : "")
 		this.window = document.createElement('div');
 		this.window.classList.add('mw')
 		this.window.style.top = increaseXPosition()
@@ -35,6 +39,7 @@ class FloatingWindow {
 		}
 		document.body.appendChild(this.window);
 
+
 		this.windowTaskbar = document.createElement('div');
 		this.windowTaskbar.classList.add('taskbar')
 		var tb = floatingWindowConfig.taskBar;
@@ -46,6 +51,14 @@ class FloatingWindow {
 		this.windowTaskbar.style.height = floatingWindowConfig.taskBar.height + "px";
 		this.window.appendChild(this.windowTaskbar);
 
+		var oppositecolor = (lightOrDark(floatingWindowConfig.taskBar.color) ? "black" : "white")
+		this.windowTitle = document.createElement('p');
+		this.windowTitle.innerHTML = title;
+		this.windowTitle.classList.add('title');
+		this.windowTitle.style.fontSize = floatingWindowConfig.taskBar.height - 15 + "px"
+		this.windowTitle.style.color = oppositecolor;
+		this.windowTaskbar.appendChild(this.windowTitle)
+
 		this.windowActions = document.createElement('div')
 		this.windowActions.classList.add('actions')
 		this.windowActions.style.right = 0;
@@ -55,21 +68,20 @@ class FloatingWindow {
 		this.windowActions.innerHTML = `
 			<div class="action"> 
 				<svg width="50" height="20" style="padding-top: ${padding}; padding-bottom: ${padding};">
-					<rect x="20" y="9" width="10" height="2" stroke="black"></rect>
+					<path d="M20,10 30,10" fill="none" stroke="${oppositecolor}" stroke-linecap="round" stroke-width="2"></path>
 				</svg>
 			</div>
 			<div class="action"> 
 				<svg width="50" height="20" style="padding-top: ${padding}; padding-bottom: ${padding};">
-					<rect x="20" y="7" width="10" height="8" fill="none" stroke="black"></rect>
-					<path d="M23,6 23,4 33,4 33,12 31,12" fill="none" stroke="black"></path>
+					<path d="M23,6 23,4 33,4 33,12 31,12 M20,7 30,7 30,15 20,15 20,7 25,7" fill="none" stroke="${oppositecolor}" stroke-linejoin="round" stroke-width="2"></path>
 				</svg>
 			</div>
-			<div class="action"> 
+			<div class="action" onclick="this.parentElement.parentElement.parentElement.remove()"> 
 				<svg width="50" height="20" style="padding-top: ${padding}; padding-bottom: ${padding};">
-					<path d="M20,5 30,15" fill="none" stroke="black" stroke-width="2"></path>
-					<path d="M20,15 30,5" fill="none" stroke="black" stroke-width="2"></path>
+					<path d="M20,5 30,15 M30,5 20,15 25" fill="none" stroke="${oppositecolor}" stroke-linecap="round" stroke-width="2"></path>
 				</svg>
-			</div>`
+			</div>
+		`
 		this.windowTaskbar.appendChild(this.windowActions)
 
 		this.windowContent = document.createElement('div');
@@ -103,4 +115,38 @@ function increaseYPosition() {
 
 function getRandomColor() {
 	return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+}
+
+
+function lightOrDark(color) {
+
+    // Variables for red, green, blue values
+    var r, g, b, hsp;
+    
+    // Check the format of the color, HEX or RGB?
+    if (color.match(/^rgb/)) {
+
+        // If RGB --> store the red, green, blue values in separate variables
+        color = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+        
+        r = color[1];
+        g = color[2];
+        b = color[3];
+    } 
+    else {
+        
+        // If hex --> Convert it to RGB: http://gist.github.com/983661
+        color = +("0x" + color.slice(1).replace( 
+        color.length < 5 && /./g, '$&$&'));
+
+        r = color >> 16;
+        g = color >> 8 & 255;
+        b = color & 255;
+    }
+    hsp = Math.sqrt(
+    0.299 * (r * r) +
+    0.587 * (g * g) +
+    0.114 * (b * b)
+    );
+    return (hsp>127.5)
 }
