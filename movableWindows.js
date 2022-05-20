@@ -31,7 +31,29 @@ class FloatingWindow {
 		this.window.onmousemove = function() {
 			if (event.buttons === 1 && this.getAttribute('held') === 'true') {
 				this.style.left = adjustPxString(this.style.left,event.movementX);
-				this.style.top  = adjustPxString(this.style.top, event.movementY);				
+				this.style.top  = adjustPxString(this.style.top, event.movementY);
+				if (this.classList.contains('maximized') || this.classList.contains('fixedtoleft') || this.classList.contains('fixedtoright')) {
+					this.classList.remove('maximized');
+					this.classList.remove('fixedtoleft');
+					this.classList.remove('fixedtoright');
+					this.style.left = event.clientX - this.style.width.replace("px","") / 2 + "px";
+					this.style.top = event.clientY - 10 / 2 + "px";
+				}
+				if (event.clientX === 0) {
+					this.classList.add('fixedtoleft');
+				} else {
+					this.classList.remove('fixedtoleft');
+				}
+				if (event.clientX >= window.innerWidth) {
+					this.classList.add('fixedtoright');
+				} else {
+					this.classList.remove('fixedtoright');
+				}
+				if (event.clientY <= 0) {
+					this.classList.add('maximized');
+				} else {
+					this.classList.remove('maximized');
+				}
 			}
 		}
 		this.window.onmouseup = function() {
@@ -71,7 +93,7 @@ class FloatingWindow {
 					<path d="M20,10 30,10" fill="none" stroke="${oppositecolor}" stroke-linecap="round" stroke-width="2"></path>
 				</svg>
 			</div>
-			<div class="action"> 
+			<div class="action" onclick="maximizeWindow(this.parentElement.parentElement.parentElement);"> 
 				<svg width="50" height="20" style="padding-top: ${padding}; padding-bottom: ${padding};">
 					<path d="M23,6 23,4 33,4 33,12 31,12 M20,7 30,7 30,15 20,15 20,7 25,7" fill="none" stroke="${oppositecolor}" stroke-linejoin="round" stroke-width="2"></path>
 				</svg>
@@ -85,6 +107,7 @@ class FloatingWindow {
 		this.windowTaskbar.appendChild(this.windowActions)
 
 		this.windowContent = document.createElement('div');
+		this.windowContent.classList.add('contents')
 		this.windowContent.style.height = height - floatingWindowConfig.taskBar.height + "px"
 		this.windowContent.style.width = width + "px";
 		this.windowContent.style.position = "absolute"
@@ -97,6 +120,22 @@ class FloatingWindow {
 
 function adjustPxString(string, mod) {
 	return parseInt(string.replace("px","")) + mod + "px";
+}
+
+function maximizeWindow(elem) {
+	if (elem.classList.contains('fixedtoright')) {
+		elem.classList.remove('fixedtoright');
+		return;
+	}
+	if (elem.classList.contains('fixedtoleft')) {
+		elem.classList.remove('fixedtoleft');
+		return;
+	}
+	if (elem.classList.contains('maximized')) {
+		elem.classList.remove('maximized');
+		return
+	}
+	elem.classList.add('maximized');
 }
 
 function increaseZIndex() {
