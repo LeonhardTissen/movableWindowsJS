@@ -39,7 +39,7 @@ class FloatingWindow {
 					this.style.left = event.clientX - this.style.width.replace("px","") / 2 + "px";
 					this.style.top = event.clientY - 10 / 2 + "px";
 				}
-				if (event.clientX === 0) {
+				if (event.clientX <= 0) {
 					this.classList.add('fixedtoleft');
 				} else {
 					this.classList.remove('fixedtoleft');
