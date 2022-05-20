@@ -2,23 +2,21 @@
 	position: fixed;
 	overflow: hidden;
 }
+.fixedtoleft, .fixedtoright, .maximized {
+	top: 0 !important;
+	height: 100vh !important;
+}
 .fixedtoleft {
 	width: 50vw !important;
-	height: 100vh !important;
 	left: 0 !important;
-	top: 0 !important;
 }
 .fixedtoright {
 	width: 50vw !important;
-	height: 100vh !important;
 	left: 50vw !important;
-	top: 0 !important;
 }
 .maximized {
 	width: 100vw !important;
-	height: 100vh !important;
 	left: 0 !important;
-	top: 0 !important;
 }
 .maximized .contents, .fixedtoleft .contents, .fixedtoright .contents {
 	width: 100% !important;
